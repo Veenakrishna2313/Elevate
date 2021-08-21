@@ -1,11 +1,29 @@
 import React, { Component } from 'react';
 import { getMovies } from '../services/fakeMovieService';
+import Like from './like';
+import 'font-awesome/css/font-awesome.css';
 
 
 class Movies extends Component {
   state = { 
-    movies:getMovies() 
-   };
+    movies:getMovies() ,
+    };
+
+   handleClick=(movie)=>{
+console.log("clicked!", movie._id + "liked " + movie.likes);  
+    const movies=[...this.state.movies];
+    console.log("movies array",movies);
+
+    const index=movies.indexOf(movie);
+     console.log("Index", index);
+   movies[index]={...movies[index]};
+     movies[index].likes=!movies[index].likes;
+     this.setState({movies});
+
+  
+    this.setState();
+
+   }
 
    handleDelete=(movie)=>{
     console.log("delete!", movie);
@@ -14,9 +32,9 @@ class Movies extends Component {
 console.log("deleted this!", movies.length + movies);
     this.setState({movies});
 
-
-
    }
+
+   
 
   render() { 
 
@@ -51,6 +69,8 @@ console.log("deleted this!", movies.length + movies);
           <td>{movie.genre.name}</td>
           <td>{movie.numberInStock}</td>
           <td>{movie.dailyRentalRate}</td>
+          <td><Like movie={movie} onClicking={()=>this.handleClick(movie)}></Like></td>
+          
           <td><button onClick={()=>this.handleDelete(movie)} className="btn btn-danger m-3">Delete</button></td>
         </tr>
         ))}

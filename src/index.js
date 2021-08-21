@@ -5,6 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
+import '@fortawesome/free-solid-svg-icons';
+import '@fortawesome/free-solid-svg-icons'
 
 ReactDOM.render(
   <React.StrictMode>
