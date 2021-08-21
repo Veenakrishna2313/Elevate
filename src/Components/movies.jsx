@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { getMovies } from '../services/fakeMovieService';
-import Like from './like';
+import Like from './common/like';
 import 'font-awesome/css/font-awesome.css';
+import Pagination from './common/pagination'
 
 
 class Movies extends Component {
@@ -77,6 +78,7 @@ console.log("deleted this!", movies.length + movies);
         
       </tbody>
     </table>
+    <Pagination></Pagination>
     </div>
 
      );
