@@ -3,7 +3,8 @@ import _ from 'lodash';
 
 const Pagination = (props) => {
 
-  const {noOfMovies, pageSize}=props;
+  const {noOfMovies, pageSize, currentPage,  onClicked}=props;
+  console.log("Current page",currentPage);
 
   const pageCount=Math.ceil(noOfMovies/pageSize); // converts floating number to integer
   console.log("page count", pageCount);
@@ -17,8 +18,9 @@ const Pagination = (props) => {
       <div>
     <nav aria-label="...">
     <ul className="pagination pagination-lg">
-      {pages.map((page)=> <li  key={page} className="page-item disabled">
-        <a  className="page-link" href ="#">{page}</a>
+      {pages.map((page)=>
+       <li  key={page}  className="page-item ">
+        <a className="page-link" onClick={()=>onClicked(page)}>{page}</a>
       </li> )}
       
       

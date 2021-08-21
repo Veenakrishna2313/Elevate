@@ -8,7 +8,7 @@ import Pagination from './common/pagination'
 class Movies extends Component {
   state = { 
     movies:getMovies() ,
-    size:4
+    pageSize:4
     };
 
    handleClick=(movie)=>{
@@ -22,9 +22,6 @@ console.log("clicked!", movie._id + "liked " + movie.likes);
      movies[index].likes=!movies[index].likes;
      this.setState({movies});
 
-  
-    this.setState();
-
    }
 
    handleDelete=(movie)=>{
@@ -35,13 +32,17 @@ console.log("deleted this!", movies.length + movies);
     this.setState({movies});
 
    }
-
+handlePageChange=(page)=>{
+  console.log("Page clicked!!", page);
+  this.setState({currentPage:page});
+}
    
 
   render() { 
 
     // conditional rendering : if the count is zero, then it ll show the first return statement. else it will render the table
     const {length:count}=this.state.movies;
+    const {pageSize, currentPage}= this.state;
     if(count===0)
 
     return <h1>There are no movies</h1>
@@ -79,7 +80,7 @@ console.log("deleted this!", movies.length + movies);
         
       </tbody>
     </table>
-    <Pagination noOfMovies={count} pageSize={this.state.size} onClick={this.handlePageChange}></Pagination>
+    <Pagination noOfMovies={count} pageSize={pageSize} currentPage={currentPage} onClicked={this.handlePageChange}></Pagination>
     </div>
 
      );
