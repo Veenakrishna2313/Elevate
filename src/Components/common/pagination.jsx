@@ -1,15 +1,27 @@
-import React, { Component } from 'react'
+import React from 'react';
+import _ from 'lodash';
 
 const Pagination = (props) => {
+
+  const {noOfMovies, pageSize}=props;
+
+  const pageCount=Math.ceil(noOfMovies/pageSize); // converts floating number to integer
+  console.log("page count", pageCount);
+
+// returns array of pages
+ const pages= _.range(1,pageCount+1);
+ console.log("pages", pages);
+ if(pageCount===1) return null;
+
   return ( 
       <div>
     <nav aria-label="...">
-    <ul class="pagination pagination-lg">
-      <li class="page-item disabled">
-        <a class="page-link" href="#" tabindex="-1">1</a>
-      </li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <ul className="pagination pagination-lg">
+      {pages.map((page)=> <li  key={page} className="page-item disabled">
+        <a  className="page-link" href ="#">{page}</a>
+      </li> )}
+      
+      
     </ul>
   </nav>
       </div>

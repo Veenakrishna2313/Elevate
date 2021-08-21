@@ -8,6 +8,7 @@ import Pagination from './common/pagination'
 class Movies extends Component {
   state = { 
     movies:getMovies() ,
+    size:4
     };
 
    handleClick=(movie)=>{
@@ -51,7 +52,7 @@ console.log("deleted this!", movies.length + movies);
     
 
     <div>
-      <h1>Showing {this.state.movies.length} movies in the Database </h1> 
+      <h1>Showing {count} movies in the Database </h1> 
     <table className="table">
       <thead>
         <tr>
@@ -78,7 +79,7 @@ console.log("deleted this!", movies.length + movies);
         
       </tbody>
     </table>
-    <Pagination></Pagination>
+    <Pagination noOfMovies={count} pageSize={this.state.size} onClick={this.handlePageChange}></Pagination>
     </div>
 
      );
