@@ -7,7 +7,8 @@ import Pagination from './common/pagination'
 
 class Movies extends Component {
   state = { 
-    movies:getMovies() ,
+    movies:getMovies(),
+    currentPage:1,
     pageSize:4
     };
 
