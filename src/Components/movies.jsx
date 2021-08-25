@@ -5,17 +5,22 @@ import 'font-awesome/css/font-awesome.css';
 import Pagination from './common/pagination';
 import { paginate } from '../Utils/paginate';
 import GenreList from "./common/genreList";
-import { genres, getGenres } from '../services/fakeGenreService';
+import { getGenres } from '../services/fakeGenreService';
 
 
 
 class Movies extends Component {
   state = { 
-    movies:getMovies(),
+    movies:[],
     currentPage:1,
     pageSize:4,
-    genres:getGenres()
+    genres:[]
     };
+
+    componentDidMount(){
+
+      this.setState({movies:getMovies(),genres:getGenres() })
+    }
 
    handleClick=(movie)=>{
 console.log("clicked!", movie._id + "liked " + movie.likes);  
@@ -49,6 +54,8 @@ handlePageChange=(page)=>{
     // conditional rendering : if the count is zero, then it ll show the first return statement. else it will render the table
     const {length:count}=this.state.movies;
     const {pageSize, currentPage,movies: allMovies}= this.state;
+    const {genres}=this.state.genres.name;
+    
     if(count===0)
 
     return <h1>There are no movies</h1>
@@ -58,8 +65,10 @@ handlePageChange=(page)=>{
     return (    
     <div className="row">
        
-    <div className="col-2 "></div>
-      <div className="col "></div>
+    <div className="col-2 ">
+      <GenreList genres={genres} onItemSelect={this.handleItemSelect}></GenreList>
+    </div>
+      <div className="col ">
       <h1>Showing {count} movies in the Database </h1> 
 
          
@@ -90,7 +99,7 @@ handlePageChange=(page)=>{
       </tbody>
     </table>
     <Pagination noOfMovies={count} pageSize={pageSize} currentPage={currentPage} onClicked={this.handlePageChange}></Pagination>
-    
+    </div>
 </div>
      );
   }

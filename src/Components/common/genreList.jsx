@@ -9,13 +9,13 @@ const GenreList = (props) => {
 
   return (
     
-      <div className="list-group">
-  <a className="list-group-item list-group-item-action active">
-   All Genres
-  </a>
- { genres.map((genre) =>
-  <a key={genre} className="list-group-item list-group-item-action">{genre}</a>
-  )}
+        <div className="list-group">
+          <a className="list-group-item list-group-item-action active">
+            All Genres
+           </a>
+     { genres.map((genre) =>
+    <a key={genre} >{genre}</a>
+    )}
  
   
 </div>
