@@ -1,4 +1,5 @@
 import React from 'react';
+import propTypes from 'prop-types'
 import _ from 'lodash';
 
 const Pagination = (props) => {
@@ -32,5 +33,15 @@ const Pagination = (props) => {
     );
 }
  
+// this is basically used to type check. eg: is the use who is using the pagination component given the right type of inputs. eg: instead of giving number 
+// of movies, if they give abc? there shoild be some form of type checking. For that we use Proptypes(checking the type of props/ see the props obj above)
+
+Pagination.propTypes={
+  noOfMovies:propTypes.number.isRequired,
+  pageSize:propTypes.number.isRequired, 
+  currentPage:propTypes.number.isRequired, 
+  onClicked:propTypes.func.isRequired
+
+}
 
 export default Pagination;
