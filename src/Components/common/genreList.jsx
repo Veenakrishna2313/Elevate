@@ -2,24 +2,24 @@ import React, { Component } from 'react'
 
 const GenreList = (props) => {
 
-   const {genres} =props;
+   const {genres, textProperty, nameProperty, onItemSelect} =props;
 
    console.log("Props for genre",props);
 
 
   return (
-    
-        <div className="list-group">
-          <a className="list-group-item list-group-item-action active">
-            All Genres
-           </a>
-     { genres.map((genre) =>
-    <a key={genre} >{genre}</a>
-    )}
+    <div>
+        <ul className="list-group">
+             <li className="list-group-item active">All Genres</li>
+        {genres.map((genre)=>
+        <li key={genre[textProperty]} onClick={()=>onItemSelect(genre._id)} className="list-group-item disabled">{genre[nameProperty]}</li>
+
+        )}           
+          
  
   
-</div>
-    
+</ul>
+    </div>
     );
 }
  

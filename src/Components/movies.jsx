@@ -22,6 +22,10 @@ class Movies extends Component {
       this.setState({movies:getMovies(),genres:getGenres() })
     }
 
+    handleGenreSelect=(genre_id)=>{
+     console.log("Genre clicked!!",genre_id );
+   }
+
    handleClick=(movie)=>{
 console.log("clicked!", movie._id + "liked " + movie.likes);  
     const movies=[...this.state.movies];
@@ -54,7 +58,8 @@ handlePageChange=(page)=>{
     // conditional rendering : if the count is zero, then it ll show the first return statement. else it will render the table
     const {length:count}=this.state.movies;
     const {pageSize, currentPage,movies: allMovies}= this.state;
-    const {genres}=this.state.genres.name;
+    const {genres}=this.state;
+    const {_id, name}=this.state.genres;
     
     if(count===0)
 
@@ -65,8 +70,8 @@ handlePageChange=(page)=>{
     return (    
     <div className="row">
        
-    <div className="col-2 ">
-      <GenreList genres={genres} onItemSelect={this.handleItemSelect}></GenreList>
+    <div className="col-3 ">
+    <GenreList genres={genres} nameProperty={name} textProperty={_id} ItemSelect={()=>this.handleGenreSelect(genres._id)}></GenreList>
     </div>
       <div className="col ">
       <h1>Showing {count} movies in the Database </h1> 
