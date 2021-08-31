@@ -2,7 +2,7 @@
 
 const ListGroup = (props) => {
 
-   const {items, textProperty, valueProperty, ItemSelect} =props;
+   const {items, textProperty, valueProperty, ItemSelect, selectedItem} =props;
 
    console.log("Props for genre",props);
 
@@ -10,9 +10,8 @@ const ListGroup = (props) => {
   return (
    
         <ul className="list-group">
-             <li className="list-group-item active">All items</li>
         {items.map((item)=>
-        <li key={item[textProperty]} onClick={()=>ItemSelect(item)} className="list-group-item disabled">{item[textProperty]}</li>
+        <li key={item[valueProperty]} onClick={()=>ItemSelect(item)} className={item===selectedItem?"list-group-item active": "list-group-item disabled"}>{item[textProperty]}</li>
 
         )}
         </ul>

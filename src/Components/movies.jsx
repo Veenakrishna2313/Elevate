@@ -20,11 +20,16 @@ class Movies extends Component {
 
     componentDidMount(){
 
-      this.setState({movies:getMovies(),genres:getGenres() })
+      const genres=[{name:'All Genres'},...getGenres()]
+
+      this.setState({movies:getMovies(),genres })
     }
 
-    handleGenreSelect=(genre_id)=>{
-     console.log("Genre clicked!!",genre_id );
+    handleGenreSelect=(genre)=>{
+     console.log("Genre clicked!!",genre );
+     this.setState({selectedGenre:genre, currentPage:1});
+     
+     
    }
 
    handleClick=(movie)=>{
@@ -58,24 +63,25 @@ handlePageChange=(page)=>{
 
     // conditional rendering : if the count is zero, then it ll show the first return statement. else it will render the table
     const {length:count}=this.state.movies;
-    const {pageSize, currentPage,movies: allMovies}= this.state;
+    const {pageSize, currentPage,movies: allMovies, selectedGenre}= this.state;
     const {genres}=this.state;
     
     
-    if(count===0)
+    if(count===0) return <h1>There are no movies</h1>
 
-    return <h1>There are no movies</h1>
 
-    const movies=paginate(allMovies, currentPage, pageSize)
+    const filtered=selectedGenre && selectedGenre._id?allMovies.filter(m=>m.genre._id===selectedGenre._id): allMovies;
+
+    const movies=paginate(filtered, currentPage, pageSize);
 
     return (    
     <div className="row">
        
     <div className="col-3 ">
-    <ListGroup items={genres} ItemSelect={this.handleGenreSelect}></ListGroup>
+    <ListGroup items={genres} selectedItem={this.state.selectedGenre} ItemSelect={this.handleGenreSelect}></ListGroup>
     </div>
       <div className="col ">
-      <h1>Showing {count} movies in the Database </h1> 
+      <h1>Showing {filtered.length} movies in the Database </h1> 
 
          
     <table className="table">
@@ -104,7 +110,7 @@ handlePageChange=(page)=>{
         
       </tbody>
     </table>
-    <Pagination noOfMovies={count} pageSize={pageSize} currentPage={currentPage} onClicked={this.handlePageChange}></Pagination>
+    <Pagination noOfMovies={filtered.length} pageSize={pageSize} currentPage={currentPage} onClicked={this.handlePageChange}></Pagination>
     </div>
 </div>
      );
