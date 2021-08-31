@@ -4,8 +4,9 @@ import Like from './common/like';
 import 'font-awesome/css/font-awesome.css';
 import Pagination from './common/pagination';
 import { paginate } from '../Utils/paginate';
-import GenreList from "./common/genreList";
+
 import { getGenres } from '../services/fakeGenreService';
+import ListGroup from './common/listGroup';
 
 
 
@@ -59,7 +60,7 @@ handlePageChange=(page)=>{
     const {length:count}=this.state.movies;
     const {pageSize, currentPage,movies: allMovies}= this.state;
     const {genres}=this.state;
-    const {_id, name}=this.state.genres;
+    
     
     if(count===0)
 
@@ -71,7 +72,7 @@ handlePageChange=(page)=>{
     <div className="row">
        
     <div className="col-3 ">
-    <GenreList genres={genres} nameProperty={name} textProperty={_id} ItemSelect={()=>this.handleGenreSelect(genres._id)}></GenreList>
+    <ListGroup items={genres} ItemSelect={this.handleGenreSelect}></ListGroup>
     </div>
       <div className="col ">
       <h1>Showing {count} movies in the Database </h1> 
