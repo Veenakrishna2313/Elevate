@@ -21,7 +21,7 @@ class Movies extends Component {
 
     componentDidMount(){
 
-      const genres=[{name:'All Genres'},...getGenres()]
+      const genres=[{_id:" ", name:'All Genres'},...getGenres()]
 
       this.setState({movies:getMovies(),genres })
     }
@@ -54,6 +54,11 @@ console.log("deleted this!", movies.length + movies);
     this.setState({movies});
 
    }
+
+   handleSort=(target)=>{
+    console.log("Sort by", target);
+
+   }
 handlePageChange=(page)=>{
   console.log("Page clicked!!", page);
   this.setState({currentPage:page});
@@ -76,19 +81,32 @@ handlePageChange=(page)=>{
     const movies=paginate(filtered, currentPage, pageSize);
 
     return (    
-    <div className="row">
-       
-    <div className="col-3 ">
-    <ListGroup items={genres} selectedItem={this.state.selectedGenre} ItemSelect={this.handleGenreSelect}></ListGroup>
-    </div>
-      <div className="col ">
-      <h1>Showing {filtered.length} movies in the Database </h1> 
+  <div className="row">       
+     <div className="col-3 ">
+       <ListGroup 
+       items={genres}
+       selectedItem={this.state.selectedGenre} 
+       ItemSelect={this.handleGenreSelect}>
+        </ListGroup>
+      </div>
 
-      <MoviesTable movies={movies} onDelete={this.handleDelete} onLike={this.handleLike}></MoviesTable>   
+    <div className="col ">
+      <h1>Showing {filtered.length} movies in the Database </h1> 
+      <MoviesTable 
+      movies={movies} 
+      onDelete={this.handleDelete} 
+      onLike={this.handleLike}
+      onSort={this.handleSort}>
+      </MoviesTable>   
    
-    <Pagination noOfMovies={filtered.length} pageSize={pageSize} currentPage={currentPage} onClicked={this.handlePageChange}></Pagination>
+      <Pagination 
+      noOfMovies={filtered.length} 
+      pageSize={pageSize} 
+      currentPage={currentPage} 
+      onClicked={this.handlePageChange}>
+      </Pagination>
     </div>
-</div>
+  </div>
      );
   }
 }
