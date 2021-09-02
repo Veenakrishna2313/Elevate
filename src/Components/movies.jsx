@@ -57,16 +57,9 @@ console.log("deleted this!", movies.length + movies);
 
    }
 
-   handleSort=(path)=>{
-    console.log("Sort by", path);
+   handleSort=(sortColumn)=>{
+    console.log("Sort by", sortColumn);
 
-    const sortColumn={...this.state.sortColumn};
-    if(sortColumn.path===path)
-      sortColumn.order=(sortColumn.order==='asc')? 'desc':'asc';
-    else{
-      sortColumn.path=path;
-      sortColumn.order='asc';
-    }
     this.setState({sortColumn})
 
    }
@@ -93,7 +86,7 @@ handlePageChange=(page)=>{
     : allMovies;
 
 
-  const sorted=_.orderBy(filtered, [sortColumn.path], [sortColumn.order])
+  const sorted=_.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
     const movies=paginate(sorted, currentPage, pageSize);
 
@@ -113,7 +106,8 @@ handlePageChange=(page)=>{
       movies={movies} 
       onDelete={this.handleDelete} 
       onLike={this.handleLike}
-      onSort={this.handleSort}>
+      onSort={this.handleSort}
+      sortColumn={sortColumn}>
       </MoviesTable>   
    
       <Pagination 
