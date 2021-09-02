@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { getMovies } from '../services/fakeMovieService';
-import Like from './common/like';
+
 import 'font-awesome/css/font-awesome.css';
 import Pagination from './common/pagination';
 import { paginate } from '../Utils/paginate';
 
 import { getGenres } from '../services/fakeGenreService';
 import ListGroup from './common/listGroup';
+import MoviesTable from './moviesTable';
 
 
 
@@ -32,7 +33,7 @@ class Movies extends Component {
      
    }
 
-   handleClick=(movie)=>{
+   handleLike=(movie)=>{
 console.log("clicked!", movie._id + "liked " + movie.likes);  
     const movies=[...this.state.movies];
     console.log("movies array",movies);
@@ -83,33 +84,8 @@ handlePageChange=(page)=>{
       <div className="col ">
       <h1>Showing {filtered.length} movies in the Database </h1> 
 
-         
-    <table className="table">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Genre</th>
-          <th>Stock</th>
-          <th>Rate</th>
-          <th></th>
-        </tr> 
-      </thead>
-
-      <tbody>
-        {movies.map(movie=>(
-          <tr key={movie._id}>
-          <td>{movie.title}</td>
-          <td>{movie.genre.name}</td>
-          <td>{movie.numberInStock}</td>
-          <td>{movie.dailyRentalRate}</td>
-          <td><Like movie={movie} onClicking={()=>this.handleClick(movie)}></Like></td>
-          
-          <td><button onClick={()=>this.handleDelete(movie)} className="btn btn-danger m-3">Delete</button></td>
-        </tr>
-        ))}
-        
-      </tbody>
-    </table>
+      <MoviesTable movies={movies} onDelete={this.handleDelete} onLike={this.handleLike}></MoviesTable>   
+   
     <Pagination noOfMovies={filtered.length} pageSize={pageSize} currentPage={currentPage} onClicked={this.handlePageChange}></Pagination>
     </div>
 </div>
