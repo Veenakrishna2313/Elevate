@@ -8,6 +8,7 @@ import { paginate } from '../Utils/paginate';
 import { getGenres } from '../services/fakeGenreService';
 import ListGroup from './common/listGroup';
 import MoviesTable from './moviesTable';
+import _ from 'lodash';
 
 
 
@@ -16,7 +17,8 @@ class Movies extends Component {
     movies:[],
     currentPage:1,
     pageSize:4,
-    genres:[]
+    genres:[],
+    sortColumn:{path:"title", order:"asc"}
     };
 
     componentDidMount(){
@@ -55,8 +57,17 @@ console.log("deleted this!", movies.length + movies);
 
    }
 
-   handleSort=(target)=>{
-    console.log("Sort by", target);
+   handleSort=(path)=>{
+    console.log("Sort by", path);
+
+    const sortColumn={...this.state.sortColumn};
+    if(sortColumn.path===path)
+      sortColumn.order=(sortColumn.order==='asc')? 'desc':'asc';
+    else{
+      sortColumn.path=path;
+      sortColumn.order='asc';
+    }
+    this.setState({sortColumn})
 
    }
 handlePageChange=(page)=>{
@@ -69,16 +80,22 @@ handlePageChange=(page)=>{
 
     // conditional rendering : if the count is zero, then it ll show the first return statement. else it will render the table
     const {length:count}=this.state.movies;
-    const {pageSize, currentPage,movies: allMovies, selectedGenre}= this.state;
+    const {pageSize, currentPage,movies: allMovies, selectedGenre, sortColumn}= this.state;
     const {genres}=this.state;
     
     
     if(count===0) return <h1>There are no movies</h1>
 
 
-    const filtered=selectedGenre && selectedGenre._id?allMovies.filter(m=>m.genre._id===selectedGenre._id): allMovies;
+    const filtered=
+    selectedGenre && selectedGenre._id
+    ?allMovies.filter(m=>m.genre._id===selectedGenre._id)
+    : allMovies;
 
-    const movies=paginate(filtered, currentPage, pageSize);
+
+  const sorted=_.orderBy(filtered, [sortColumn.path], [sortColumn.order])
+
+    const movies=paginate(sorted, currentPage, pageSize);
 
     return (    
   <div className="row">       
