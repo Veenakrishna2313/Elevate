@@ -67,26 +67,36 @@ handlePageChange=(page)=>{
   console.log("Page clicked!!", page);
   this.setState({currentPage:page});
 }
-   
 
-  render() { 
+getPageData=()=>{
+  const {pageSize, currentPage,movies: allMovies, selectedGenre, sortColumn}= this.state;
 
-    // conditional rendering : if the count is zero, then it ll show the first return statement. else it will render the table
-    const {length:count}=this.state.movies;
-    const {pageSize, currentPage,movies: allMovies, selectedGenre, sortColumn}= this.state;
-    const {genres}=this.state;
-    
-    
-    if(count===0) return <h1>There are no movies</h1>
-
-
-    const filtered=selectedGenre && selectedGenre._id?allMovies.filter(m=>m.genre._id===selectedGenre._id): allMovies;
+ const filtered=selectedGenre && selectedGenre._id?allMovies.filter(m=>m.genre._id===selectedGenre._id): allMovies;
 
 
   const sorted=_.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
     const movies=paginate(sorted, currentPage, pageSize);
 
+    return {totalCount:filtered.length, data:movies}
+
+
+}
+   
+
+  render() { 
+
+    // conditional rendering : if the count is zero, then it ll show the first return statement. else it will render the table
+    const {length:count}=this.state.movies;
+    const {pageSize, currentPage, sortColumn}= this.state;
+    const {genres}=this.state;
+    
+    
+    if(count===0) return <h1>There are no movies</h1>
+
+    const {totalCount,data:movies}= this.getPageData();
+
+   
     return (    
   <div className="row">       
      <div className="col-3 ">
@@ -94,11 +104,11 @@ handlePageChange=(page)=>{
       </div>
 
     <div className="col ">
-      <h1>Showing {filtered.length} movies in the Database </h1> 
+      <h1>Showing {totalCount} movies in the Database </h1> 
       <MoviesTable movies={movies} onDelete={this.handleDelete} onLike={this.handleLike} onSort={this.handleSort} sortColumn={sortColumn}>
       </MoviesTable>   
    
-      <Pagination noOfMovies={filtered.length} pageSize={pageSize} currentPage={currentPage}       onClicked={this.handlePageChange}>
+      <Pagination noOfMovies={totalCount} pageSize={pageSize} currentPage={currentPage}       onClicked={this.handlePageChange}>
       </Pagination>
     </div>
   </div>

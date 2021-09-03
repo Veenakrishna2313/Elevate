@@ -2,9 +2,9 @@ import React from 'react';
 import propTypes from 'prop-types'
 import _ from 'lodash';
 
-const Pagination = (props) => {
+const Pagination = ({noOfMovies, pageSize, currentPage,  onClicked}) => {
 
-  const {noOfMovies, pageSize, currentPage,  onClicked}=props;
+ 
   console.log("Current page",currentPage);
 
   const pageCount=Math.ceil(noOfMovies/pageSize); // converts floating number to integer

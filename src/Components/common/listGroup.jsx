@@ -1,12 +1,8 @@
 
 
-const ListGroup = (props) => {
+const ListGroup = ({items, textProperty, valueProperty, ItemSelect, selectedItem}) => {
 
-   const {items, textProperty, valueProperty, ItemSelect, selectedItem} =props;
-
-   console.log("Props for genre",props);
-
-
+   console.log("Props for genre");
   return (
    
         <ul className="list-group">
