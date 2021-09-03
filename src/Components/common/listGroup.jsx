@@ -11,7 +11,7 @@ const ListGroup = (props) => {
    
         <ul className="list-group">
         {items.map((item)=>
-        <li key={item[valueProperty]} onClick={()=>ItemSelect(item)} className={item===selectedItem?"list-group-item active": "list-group-item disabled"}>{item[textProperty]}</li>
+        <li key={item[valueProperty]} onClick={()=>ItemSelect(item)} className={item===selectedItem?"list-group-item clickable active": "list-group-item clickable disabled"}>{item[textProperty]}</li>
 
         )}
         </ul>
