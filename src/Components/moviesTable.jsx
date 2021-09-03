@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import TableHeader from './common/tableHeader';
 import Like from './common/like';
+import TableBody from './common/tableBody';
+
 
 
 class MoviesTable extends Component  {
@@ -10,34 +12,19 @@ class MoviesTable extends Component  {
     {path:'genre.name', label:'Genre'},
     {path:'numberInStock', label:'Stock'},
     {path:'dailyRentalRate', label:'Rate'},
-    {key:'like'},
-     {key:'delete'}
-
+    {key:'like', content: movie=><Like movie={movie} onClicking={()=>this.props.onLike(movie)}></Like>},
+    {key:'delete', content: movie=><button onClick={()=>this.props.onDelete(movie)} className="btn btn-danger m-3">Delete</button>}
   ]
 
     render(){
 
-  const {movies, onDelete, onLike, onSort, sortColumn}=this.props;
+  const {movies, onSort, sortColumn}=this.props;
 
   return ( 
 <div>
    <table className="table">
       <TableHeader columns={this.columns} onSort={onSort} sortColumn={sortColumn} ></TableHeader>
-
-      <tbody>
-        {movies.map(movie=>(
-          <tr key={movie._id}>
-          <td>{movie.title}</td>
-          <td>{movie.genre.name}</td>
-          <td>{movie.numberInStock}</td>
-          <td>{movie.dailyRentalRate}</td>
-          <td><Like movie={movie} onClicking={()=>onLike(movie)}></Like></td>
-          
-          <td><button onClick={()=>onDelete(movie)} className="btn btn-danger m-3">Delete</button></td>
-        </tr>
-        ))}
-        
-      </tbody>
+      <TableBody data={movies} columns={this.columns}></TableBody>
     </table>
 </div>
 
