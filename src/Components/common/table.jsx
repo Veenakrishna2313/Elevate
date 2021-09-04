@@ -1,5 +1,5 @@
 
-import React, { Component } from 'react';
+import React from 'react';
 import TableHeader from './tableHeader';
 import TableBody from './tableBody';
 
