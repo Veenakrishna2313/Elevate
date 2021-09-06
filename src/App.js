@@ -9,16 +9,19 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import NavBar from "./Components/common/navbar";
 import NotFound from "./Components/common/notfound";
 import MovieForm from "./Components/common/movieForm";
+
+import LoginForm from "./Components/common/loginForm";
 import "./App.css";
 
 
 function App() {
   return (
     <React.Fragment>
-      <NavBar/>
+      <NavBar />
       <main className="container">
         <Switch>
-          <Route path="/movies/:id" component={MovieForm}/>
+          <Route path="/movies/:id" component={MovieForm} />
+          <Route path="/login" component={LoginForm} />
           <Route path="/movies" component={Movies} />
           <Route path="/customers" component={Customers} />
           <Route path="/rentals" component={Rentals} />
