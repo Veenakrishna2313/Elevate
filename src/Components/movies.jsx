@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { getMovies } from '../services/fakeMovieService';
-
 import 'font-awesome/css/font-awesome.css';
 import Pagination from './common/pagination';
 import { paginate } from '../Utils/paginate';
-
 import { getGenres } from '../services/fakeGenreService';
 import ListGroup from './common/listGroup';
 import MoviesTable from './moviesTable';
@@ -89,10 +87,10 @@ getPageData=()=>{
     // conditional rendering : if the count is zero, then it ll show the first return statement. else it will render the table
     const {length:count}=this.state.movies;
     const {pageSize, currentPage, sortColumn}= this.state;
-    const {genres}=this.state;
+    const {genres, selectedGenre}=this.state;
     
     
-    if(count===0) return <h1>There are no movies</h1>
+    if(count===0) return <p>There are no movies</p>
 
     const {totalCount,data:movies}= this.getPageData();
 
@@ -100,11 +98,11 @@ getPageData=()=>{
     return (    
   <div className="row">       
      <div className="col-3 ">
-       <ListGroup  items={genres} selectedItem={this.state.selectedGenre} ItemSelect={this.handleGenreSelect}>   </ListGroup>
+       <ListGroup  items={genres} selectedItem={selectedGenre} ItemSelect={this.handleGenreSelect}>   </ListGroup>
       </div>
 
     <div className="col ">
-      <h1>Showing {totalCount} movies in the Database </h1> 
+      <h4>Showing {totalCount} movies in the Database </h4> 
       <MoviesTable movies={movies} onDelete={this.handleDelete} onLike={this.handleLike} onSort={this.handleSort} sortColumn={sortColumn}>
       </MoviesTable>   
    
