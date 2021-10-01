@@ -9,6 +9,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import NavBar from "./Components/common/navbar";
 import NotFound from "./Components/common/notfound";
 import MovieForm from "./Components/common/movieForm";
+import Register from "./Components/common/registerForm";
   import "bootstrap/dist/js/bootstrap.bundle";
 
 import LoginForm from "./Components/common/loginForm";
@@ -23,6 +24,7 @@ function App() {
         <Switch>
           <Route path="/movies/:id" component={MovieForm} />
           <Route path="/login" component={LoginForm} />
+          <Route path="/register" component={Register} />
           <Route path="/movies" component={Movies} />
           <Route path="/customers" component={Customers} />
           <Route path="/rentals" component={Rentals} />
