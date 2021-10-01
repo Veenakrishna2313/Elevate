@@ -1,4 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { AccordionButton } from 'react-bootstrap';
+import Input from './input';
 
 class LoginForm extends Component {
 state={
@@ -18,20 +20,23 @@ state={
 
     const username=this.username.current.value;
   }
-handleChange=(e)=>{
+handleChange=({currentTarget:input})=>{
 
   const account={...this.state.account};
-  account.username=e.currentTarget.value;
+  account[input.name]=input.value;
   this.setState({account});
 }
 
   render() { 
-    return <div> 
 
+    const {account}=this.state;
+    
+    return <div> 
+    <h1 className="mb-3">Login </h1>
     <form onSubmit={this.handleSubmit}>
-      <div className="form-group"><label htmlFor="username">User Name</label><input value={this.state.account.username} onChange={this.handleChange} autoFocus ref={this.username} id="username" type="text" className="form-control" /></div>
-      <div className="form-group"><label htmlFor="password">Password</label><input id="password" type="text" className="form-control" /></div>
-    <button className="btn btn-primary">Save</button>
+      <Input  name="username" value={account.username} label="Username" onChange={this.handleChange} />
+      <Input  name="password" value={account.password} label="Password" onChange={this.handleChange} />
+    <button className="btn btn-primary mt-3">Save</button>
     </form>
 
     </div>;

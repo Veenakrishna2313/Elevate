@@ -9,6 +9,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import NavBar from "./Components/common/navbar";
 import NotFound from "./Components/common/notfound";
 import MovieForm from "./Components/common/movieForm";
+  import "bootstrap/dist/js/bootstrap.bundle";
 
 import LoginForm from "./Components/common/loginForm";
 import "./App.css";
