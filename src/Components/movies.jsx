@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { getMovies } from '../services/fakeMovieService';
+import { Link } from "react-router-dom";
 import 'font-awesome/css/font-awesome.css';
 import Pagination from './common/pagination';
 import { paginate } from '../Utils/paginate';
@@ -16,6 +17,7 @@ class Movies extends Component {
     currentPage:1,
     pageSize:4,
     genres:[],
+    
     sortColumn:{path:"title", order:"asc"}
     };
 
@@ -102,6 +104,8 @@ getPageData=()=>{
       </div>
 
     <div className="col ">
+      <Link to="/movies/new" className="btn btn-primary mb-3" >New Movie </Link>
+
       <h4>Showing {totalCount} movies in the Database </h4> 
       <MoviesTable movies={movies} onDelete={this.handleDelete} onLike={this.handleLike} onSort={this.handleSort} sortColumn={sortColumn}>
       </MoviesTable>   

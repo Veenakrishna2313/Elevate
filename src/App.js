@@ -7,6 +7,7 @@ import Customers from "./Components/common/customers";
 import Rentals from "./Components/common/rentals";
 import { Route, Switch, Redirect } from "react-router-dom";
 import NavBar from "./Components/common/navbar";
+import MoviesForm from "./Components/common/moviesForm";
 import NotFound from "./Components/common/notfound";
 import MovieForm from "./Components/common/movieForm";
 import Register from "./Components/common/registerForm";
@@ -22,12 +23,12 @@ function App() {
       <NavBar />
       <main className="container">
         <Switch>
-          <Route path="/movies/:id" component={MovieForm} />
+          <Route path="/movies/:id" component={MoviesForm} />
           <Route path="/login" component={LoginForm} />
           <Route path="/register" component={Register} />
           <Route path="/movies" component={Movies} />
           <Route path="/customers" component={Customers} />
-          <Route path="/rentals" component={Rentals} />
+          <Route path="/rentals" component={Rentals} />          
           <Redirect from="/" exact to="/movies" />
           <Route path="/not-found" component={NotFound} />
           <Redirect to="/not-found" />
