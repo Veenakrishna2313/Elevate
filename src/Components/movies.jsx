@@ -7,6 +7,7 @@ import { paginate } from '../Utils/paginate';
 import { getGenres } from '../services/fakeGenreService';
 import ListGroup from './common/listGroup';
 import MoviesTable from './moviesTable';
+import SearchBox from './common/searchBox';
 import _ from 'lodash';
 
 
@@ -16,8 +17,9 @@ class Movies extends Component {
     movies:[],
     currentPage:1,
     pageSize:4,
-    genres:[],
-    
+    genres:[],    
+    searchQuery: "",
+    selectedGenre: null,    
     sortColumn:{path:"title", order:"asc"}
     };
 
@@ -28,12 +30,7 @@ class Movies extends Component {
       this.setState({movies:getMovies(),genres })
     }
 
-    handleGenreSelect=(genre)=>{
-     console.log("Genre clicked!!",genre );
-     this.setState({selectedGenre:genre, currentPage:1});
-     
-     
-   }
+   
 
    handleLike=(movie)=>{
 console.log("clicked!", movie._id + "liked " + movie.likes);  
@@ -68,10 +65,26 @@ handlePageChange=(page)=>{
   this.setState({currentPage:page});
 }
 
-getPageData=()=>{
-  const {pageSize, currentPage,movies: allMovies, selectedGenre, sortColumn}= this.state;
+handleGenreSelect = genre => {
+    this.setState({ selectedGenre: genre, searchQuery: "", currentPage: 1 });
+  };
 
- const filtered=selectedGenre && selectedGenre._id?allMovies.filter(m=>m.genre._id===selectedGenre._id): allMovies;
+  handleSearch = query => {
+    this.setState({ searchQuery: query, selectedGenre: null, currentPage: 1 });
+  };
+
+
+
+getPageData=()=>{
+  const {pageSize, currentPage,movies: allMovies, selectedGenre, sortColumn, searchQuery}= this.state;
+
+ let filtered=allMovies;
+ if (searchQuery)
+      filtered = allMovies.filter(m =>
+        m.title.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
+    else if (selectedGenre && selectedGenre._id)
+      filtered = allMovies.filter(m => m.genre._id === selectedGenre._id);
 
 
   const sorted=_.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
@@ -88,7 +101,7 @@ getPageData=()=>{
 
     // conditional rendering : if the count is zero, then it ll show the first return statement. else it will render the table
     const {length:count}=this.state.movies;
-    const {pageSize, currentPage, sortColumn}= this.state;
+    const {pageSize, currentPage, sortColumn, searchQuery }= this.state;
     const {genres, selectedGenre}=this.state;
     
     
@@ -107,6 +120,9 @@ getPageData=()=>{
       <Link to="/movies/new" className="btn btn-primary mb-3" >New Movie </Link>
 
       <h4>Showing {totalCount} movies in the Database </h4> 
+
+      <SearchBox value={searchQuery} onChange={this.handleSearch} />
+
       <MoviesTable movies={movies} onDelete={this.handleDelete} onLike={this.handleLike} onSort={this.handleSort} sortColumn={sortColumn}>
       </MoviesTable>   
    
