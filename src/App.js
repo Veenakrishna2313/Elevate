@@ -12,6 +12,8 @@ import NotFound from "./Components/common/notfound";
 import MovieForm from "./Components/common/movieForm";
 import Register from "./Components/common/registerForm";
   import "bootstrap/dist/js/bootstrap.bundle";
+  import { ToastContainer } from "react-toastify";
+  import 'react-toastify/dist/ReactToastify.css';
 
 import LoginForm from "./Components/common/loginForm";
 import "./App.css";
@@ -20,6 +22,7 @@ import "./App.css";
 function App() {
   return (
     <React.Fragment>
+      <ToastContainer/>
       <NavBar />
       <main className="container">
         <Switch>
