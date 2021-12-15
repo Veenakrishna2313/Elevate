@@ -23,7 +23,7 @@ const Pagination = ({noOfMovies, pageSize, currentPage,  onClicked}) => {
     <ul className="pagination pagination-lg">
       {pages.map((page)=>
        <li  key={page}  className={page===currentPage? "page-item active": "page-item "}>
-        <a className="page-link" onClick={()=>onClicked(page)}>{page}</a>
+        <a className="page-link"  onClick={()=>onClicked(page)}>{page}</a>
       </li> )}
       
       

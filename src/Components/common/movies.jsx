@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { getMovies, deleteMovie } from '../services/movieService';
+import { getMovies, deleteMovie } from '../../services/movieService';
 import { Link } from "react-router-dom";
 import 'font-awesome/css/font-awesome.css';
-import Pagination from './common/pagination';
-import { paginate } from '../Utils/paginate';
-import { getGenres } from '../services/genreService';
-import ListGroup from './common/listGroup';
-import MoviesTable from './moviesTable';
+import Pagination from './pagination';
+import { paginate } from '../../Utils/paginate';
+import { getGenres } from '../../services/genreService';
+import ListGroup from './listGroup';
+import MoviesTable from '../common/moviesTable';
 import {toast} from "react-toastify";
-import SearchBox from './common/searchBox';
+import SearchBox from './searchBox';
 import _ from 'lodash';
 
 
@@ -27,10 +27,13 @@ class Movies extends Component {
     async componentDidMount(){
 
       const {data}= await getGenres();
-      const genres=[{_id:'', name:'All Genres'},...data];
+      const genres=[{_id:'', name:'All Genres'}, ...data];
 
       const {data:movies}=await getMovies();
-      this.setState({movies,genres })
+      
+      this.setState({movies,genres });
+      console.log("MOvies", movies);
+       console.log(" genres", genres);
     }
 
    
@@ -50,7 +53,7 @@ console.log("clicked!", movie._id + "liked " + movie.likes);
 
    }
 
-   handleDelete=async (movie)=>{
+   handleDelete=async movie=>{
      const originalMovies=this.state.movies;
     console.log("delete!", movie);
     // filter method used to create a new array
@@ -60,9 +63,7 @@ console.log("deleted this!", movies.length + movies);
 
     try{
       await deleteMovie(movie._id);
-    }
-   
-    catch(ex){
+    }catch(ex){
       if(ex.response && ex.response.status===404 )
 toast.error("This movie has already been deleted");
 
@@ -119,6 +120,7 @@ getPageData=()=>{
 
     // conditional rendering : if the count is zero, then it ll show the first return statement. else it will render the table
     const {length:count}=this.state.movies;
+    console.log("length is",count)
     const {pageSize, currentPage, sortColumn, searchQuery }= this.state;
     const {genres, selectedGenre}=this.state;
     
